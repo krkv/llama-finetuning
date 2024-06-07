@@ -1,1 +1,2 @@
 llama-recipes==0.0.2
+wandb==0.17.1
