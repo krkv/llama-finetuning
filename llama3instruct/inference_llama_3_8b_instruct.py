@@ -27,7 +27,7 @@ top_k: int = 50 # [optional] The number of highest probability vocabulary tokens
 # define the current user input
 question = "What are the most important features for instances with outdoor temperature higher than 28 degrees?"
 
-# define tokens specific to Llama2-chat prompting   
+# define tokens specific to Llama3-instruct prompting   
 start_header_id = "<|start_header_id|>"
 end_header_id = "<|end_header_id|>"
 begin_of_text = "<|begin_of_text|>"
