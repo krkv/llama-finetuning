@@ -1,4 +1,5 @@
-natural_language,expected_parse,parsed_utteranceWhat can you do?,function [e],function [e]
+natural_language,expected_parse,parsed_utterance
+What can you do?,function [e],function [e]
 What is this chat,self [e],label [e]
 Explain this system,self and function [e],define [e]
 What is the purpose of this chat,self [e],function [e]
