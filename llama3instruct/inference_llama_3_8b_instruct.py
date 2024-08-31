@@ -34,11 +34,8 @@ begin_of_text = "<|begin_of_text|>"
 eot_id = "<|eot_id|>"
 
 # read the system prompt from a file
-with open(os.path.join(os.getcwd(), 'llama-dataset', 'system_prompt.txt'), 'r') as file:
+with open(os.path.join(os.getcwd(), 'llama3instruct', 'system_prompt.txt'), 'r') as file:
     system_prompt = file.read()
-
-# compose a prompt in the specific Llama3-Instruct format
-user_prompt = f"{begin_of_text}{start_header_id}system{end_header_id}\n{system_prompt}{eot_id}{start_header_id}user{end_header_id}\n{question}{eot_id}{start_header_id}assistant{end_header_id}"
 
 
 def load_model(model_name, quantization, use_fast_kernels):
@@ -59,7 +56,10 @@ def load_peft_model(model, peft_model):
     return peft_model
 
 
-def inference():
+def inference(user_input):
+    if len(user_input) < 1:
+        raise RuntimeError("User input is empty")
+
     # Set the seeds for reproducibility
     if is_xpu_available():
         torch.xpu.manual_seed(seed)
@@ -74,14 +74,21 @@ def inference():
 
     tokenizer = AutoTokenizer.from_pretrained(model_name)
     tokenizer.pad_token = tokenizer.eos_token
+    
+    # compose a prompt in the specific Llama3-Instruct format
+    user_prompt = (
+        f"{begin_of_text}{start_header_id}system{end_header_id}\n{system_prompt}{eot_id}{start_header_id}user{end_header_id}\n{user_input}{eot_id}{start_header_id}assistant{end_header_id}"
+    )
 
     batch = tokenizer(user_prompt, padding='max_length', truncation=True, max_length=max_padding_length, return_tensors="pt")
+    
     if is_xpu_available():
         batch = {k: v.to("xpu") for k, v in batch.items()}
     else:
         batch = {k: v.to("cuda") for k, v in batch.items()}
 
     start = time.perf_counter()
+    
     with torch.no_grad():
         outputs = model.generate(
             **batch,
@@ -95,12 +102,14 @@ def inference():
             repetition_penalty=repetition_penalty,
             length_penalty=length_penalty
         )
-    e2e_inference_time = (time.perf_counter()-start)*1000
-    print(f"the inference time is {e2e_inference_time} ms")
+   
     output_text = tokenizer.decode(outputs[0], skip_special_tokens=True)
+    
+    e2e_inference_time = (time.perf_counter()-start)*1000
+    
+    print(f"the inference time is {e2e_inference_time} ms")
 
-    return output_text
+    return output_text, e2e_inference_time
 
-# hacking it together for development
 result = inference()
 print(result)
