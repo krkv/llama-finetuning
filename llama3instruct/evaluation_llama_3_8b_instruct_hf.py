@@ -2,7 +2,7 @@ import csv
 import inference_llama_3_8b_instruct
 import pandas as pd
 
-EVALUATION_LOG_FILE = 'llama3INSTRUCT/evaluation_log.csv'
+EVALUATION_LOG_FILE = 'llama3instruct/evaluation_log.csv'
 
 def log_result(user_input, expected_parse, generated_parse, inference_time):
     with open(EVALUATION_LOG_FILE, mode='a', newline='') as file:

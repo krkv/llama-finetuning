@@ -1,1 +1,11 @@
 natural_language,expected_parse,parsed_utterance,inference_time
+What can you do?,function [e],function [e],1637.7940468955785
+What is this chat,self [e],function [e],1020.2501649037004
+Explain this system,self and function [e],function [e],1006.8841648753732
+What is the purpose of this chat,self [e],function [e],1031.9602931849658
+What can I ask,function [e],function [e],1006.5173350740224
+Describe the data,data [e],function data [e],1205.5553109385073
+What can you tell me about the model?,model [e],function [e],1034.6407929901034
+Tell me about the data and the model,data and model [e],function and statistic [e],1361.638689879328
+Explain model and data,model and data [e],function and statistic [e],1434.511979110539
+What are the features?,features [e],function [e],1013.8183850795031

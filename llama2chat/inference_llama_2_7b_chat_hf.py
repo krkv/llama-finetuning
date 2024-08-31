@@ -98,10 +98,10 @@ def inference(user_input):
             repetition_penalty=repetition_penalty,
             length_penalty=length_penalty
         )
-        
-    e2e_inference_time = (time.perf_counter()-start)*1000
     
     output = tokenizer.decode(outputs[0], skip_special_tokens=True)
+    
+    e2e_inference_time = (time.perf_counter()-start)*1000
     
     print(f"The inference time is {e2e_inference_time} ms")
         

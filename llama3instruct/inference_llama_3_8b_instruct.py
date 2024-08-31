@@ -4,13 +4,14 @@ from transformers import AutoTokenizer, AutoModelForCausalLM
 import torch
 import time
 import os
+import re
 
 ####################
 # Config variables #
 ####################
 seed: int = 42 # Seed value for reproducibility
 model_name = "meta-llama/Meta-Llama-3-8B-Instruct"
-peft_model: str = os.path.join(os.getcwd(), "llama-finetuning", "finetuned", "Llama-3-8B-Instruct", "01")
+peft_model: str = os.path.join(os.getcwd(), "finetuned", "Llama-3-8B-Instruct", "01")
 quantization: bool = True
 max_new_tokens = 100 #The maximum numbers of tokens to generate
 use_fast_kernels: bool = True # Enable using SDPA from PyTroch Accelerated Transformers, make use Flash Attention and Xformer memory-efficient kernels.
@@ -33,13 +34,15 @@ end_header_id = "<|end_header_id|>"
 begin_of_text = "<|begin_of_text|>"
 eot_id = "<|eot_id|>"
 
+model = None
+
 # read the system prompt from a file
 with open(os.path.join(os.getcwd(), 'llama3instruct', 'system_prompt.txt'), 'r') as file:
     system_prompt = file.read()
 
 
 def load_model(model_name, quantization, use_fast_kernels):
-    print(f"use_fast_kernels{use_fast_kernels}")
+    print(f"use_fast_kernels = {use_fast_kernels}")
     model = AutoModelForCausalLM.from_pretrained(
         model_name,
         return_dict=True,
@@ -56,6 +59,14 @@ def load_peft_model(model, peft_model):
     return peft_model
 
 
+def get_model():
+    global model
+    if model == None:
+        model = load_model(model_name, quantization, use_fast_kernels)
+        model = load_peft_model(model, peft_model)
+    return model
+
+
 def inference(user_input):
     if len(user_input) < 1:
         raise RuntimeError("User input is empty")
@@ -66,26 +77,23 @@ def inference(user_input):
     else:
         torch.cuda.manual_seed(seed)
     torch.manual_seed(seed)
-    
-    model = load_model(model_name, quantization, use_fast_kernels)
-    model = load_peft_model(model, peft_model)
-
-    model.eval()
 
     tokenizer = AutoTokenizer.from_pretrained(model_name)
     tokenizer.pad_token = tokenizer.eos_token
     
     # compose a prompt in the specific Llama3-Instruct format
-    user_prompt = (
+    prompt = (
         f"{begin_of_text}{start_header_id}system{end_header_id}\n{system_prompt}{eot_id}{start_header_id}user{end_header_id}\n{user_input}{eot_id}{start_header_id}assistant{end_header_id}"
     )
 
-    batch = tokenizer(user_prompt, padding='max_length', truncation=True, max_length=max_padding_length, return_tensors="pt")
+    batch = tokenizer(prompt, padding='max_length', truncation=True, max_length=max_padding_length, return_tensors="pt")
     
     if is_xpu_available():
         batch = {k: v.to("xpu") for k, v in batch.items()}
     else:
         batch = {k: v.to("cuda") for k, v in batch.items()}
+        
+    model = get_model()
 
     start = time.perf_counter()
     
@@ -103,13 +111,12 @@ def inference(user_input):
             length_penalty=length_penalty
         )
    
-    output_text = tokenizer.decode(outputs[0], skip_special_tokens=True)
+    output = tokenizer.decode(outputs[0], skip_special_tokens=True)
     
     e2e_inference_time = (time.perf_counter()-start)*1000
     
-    print(f"the inference time is {e2e_inference_time} ms")
+    print(f"The inference time is {e2e_inference_time} ms")
+    
+    generated_parse = re.sub("system\n.*\n.*assistant", "", output) # cut the prompt text from the output
 
-    return output_text, e2e_inference_time
-
-result = inference()
-print(result)
+    return generated_parse, e2e_inference_time
