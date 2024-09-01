@@ -1,3 +1,5 @@
 velv-llama-finetuning
 .ipynb_checkpoints
 wandb
+llama2chat/__pycache__
+llama3instruct/__pycache__
