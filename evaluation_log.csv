@@ -1,9 +1,0 @@
-What can you do?,function [e]
-What is this chat,label [e]
-Explain this system,define [e]
-What is the purpose of this chat,function [e]
-What can I ask,previousfilter and previousoperation [e]
-Describe the data,data [e]
-What can you tell me about the model?,model [e]
-Tell me about the data and the model,data and model [e]
-

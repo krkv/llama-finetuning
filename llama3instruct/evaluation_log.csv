@@ -1,11 +1,66 @@
 natural_language,expected_parse,parsed_utterance,inference_time
-What can you do?,function [e],function [e],1637.7940468955785
-What is this chat,self [e],function [e],1020.2501649037004
-Explain this system,self and function [e],function [e],1006.8841648753732
-What is the purpose of this chat,self [e],function [e],1031.9602931849658
-What can I ask,function [e],function [e],1006.5173350740224
-Describe the data,data [e],function data [e],1205.5553109385073
-What can you tell me about the model?,model [e],function [e],1034.6407929901034
-Tell me about the data and the model,data and model [e],function and statistic [e],1361.638689879328
-Explain model and data,model and data [e],function and statistic [e],1434.511979110539
-What are the features?,features [e],function [e],1013.8183850795031
+What can you do?,function [e],function [e],1633.4887710399926
+What is this chat,self [e],function [e],1035.0549300201237
+Explain this system,self and function [e],function [e],1034.5074399374425
+What is the purpose of this chat,self [e],function [e],1058.2655910402536
+What can I ask,function [e],function [e],1043.3756774291396
+Describe the data,data [e],function data [e],1214.9679348804057
+what is the dataset?,data [e],data [e],1041.9235900044441
+What can you tell me about the model?,model [e],function [e],1041.1376897245646
+Describe the model,model [e],function [e],1106.2237080186605
+Tell me about the data and the model,data and model [e],function and statistic [e],1394.4989535957575
+Explain model and data,model and data [e],function and statistic [e],1422.6555619388819
+What are the features?,features [e],function [e],1107.1669179946184
+Yes,followup [e],filter past_electricity greater than 1929.025 and mistake sample [e],3674.1003915667534
+Show more deatils,followup [e],followup [e],1253.9562159217894
+Tell me more,followup [e],followup [e],1256.4234011806548
+I want more info,followup [e],function [e],1009.6636023372412
+Tell me about outdoor temperature distribution,statistic outdoor_temperature [e],statistic outdoor_temperature [e],1579.2962219566107
+what is the average indoor temperature?,statistic indoor_temperature [e],statistic indoor_temperature [e],1621.232143137604
+Maximum of past electricity,statistics past_electricity [e],previousfilter and maximum past_electricity [e],2413.354218006134
+Show id 33,filter id 33 and show [e],show 33 [e],1458.801656961441
+What are the features of the instance 50?,filter id 50 and show [e],filter id 50 and show [e],2037.6706388778985
+Show me data points with outdoor temperature higher than 22,filter outdoor_temperature greater than 22 and show [e],filter outdoor_temperature greater than 22 and show [e],2511.800730135292
+what ids have past electricity less than 1000,filter past_electricity less than 1000 and show [e],filter past_electricity less than 1000 and show id [e],3370.3892049379647
+How many instances with indoor temperature more than 25 degrees?,filter indoor_temperature greater than 25 and countdata [e],filter indoor_temperature greater than 25 and countdata [e],2720.178226940334
+How many rows are in the dataset?,countdata [e],countdata [e],1232.2844406589866
+Total number of ids,countdata [e],countdata [e],1235.1020551286638
+How many instances was in that selection?,previousfilter and countdata [e],previousfilter and countdata [e],1780.8095118962228
+How do the features interact?,interact [e],interact [e],1218.3283539488912
+What are most important features?,important all [e],important all [e],1224.509502761066
+Features by importance,important all [e],important all [e],1215.587175451219
+What are feature importances for id 111?,filter id 111 and important all [e],filter id 111 and important all [e],2140.628898050636
+What is the prediction for id 123?,filter id 123 and predict [e],filter id 123 and predict [e],2018.3428302407265
+How do you predict the data point 20,filter id 20 and predict [e],filter id 20 and predict [e],1928.6018521524966
+What are the predictions for rows with outdoor temperature higher than 22?,filter outdoor_temperature greater than 22 and predict [e],filter outdoor_temperature greater than 22 and predict [e],2582.1261550299823
+Show predictions where indoor temperature is less than 21 degree,filter indoor_temperature less than 21 and predict [e],filter indoor_temperature less than 21 and predict [e],2534.2100909911096
+What is predicted when past electricity is less than 2000?,filter past_electricity less than 2000 and predict [e],filter past_electricity less than 2000 and predict [e],3138.624932616949
+Explain the predictions,explain features [e],previousfilter and explain features [e],1807.5963072478771
+Why is id 33 predicted this way?,filter id 33 and explain features [e],filter id 33 and explain features [e],2106.6562556661665
+why this result for data point 200,filter id 200 and explain features [e],filter id 200 and explain features [e],2176.2173869647086
+help me understand this prediction,previousfilter and explain features [e],previousfilter and explain features [e],1766.2142287008464
+why is that so?,previousfilter and explain features [e],previousfilter mistake sample [e] and mistake typical [e]  [e],3471.3273509405553
+What are the most important features for the points with outdoor temperature higher than 25 degrees?,filter outdoor_temperature greater than 25 and explain features [e],filter outdoor_temperature greater than 25 and important all [e],2672.1693109720945
+What are the labels when outdoor_temperature is higher than 24?,filter outdoor_temperature greater than 24 and label [e],filter outdoor_temperature greater than 24 and label [e],2561.1588461324573
+What are the labels of the data?,label [e],label [e],1044.564011041075
+What is the ground truth for id 23?,filter id 23 and label [e],filter id 23 and label [e],1996.747992001474
+I want to see ground truth values,label [e],label [e],1040.621515829116
+What is the correct prediction for this point?,previousfilter and label [e],previousfilter [e] and predict [e],2203.6287379451096
+Show me the truth values for rows where indoor temperature is less than 23,filter indoor_temperature less than 23 and label [e],filter indoor_temperature less than 23 and label [e],2518.420596141368
+What is the actual value for id 11?,filter id 11 and label [e],filter id 11 and show [e],1908.7370750494301
+How can I change the prediction for id 33?,filter id 33 and explain cfe [e],change id 33 and score default [e] [filter id 33] and change outdoor_temperature increase 23 and predict [e] [filter id 33] and change outdoor_temperature increase 21 [e] [filter id 33] and predict [e] [filter id 33] and predict [e] [filter id 33] and change outdoor_temperature increase 23 and predict [e] [filter id 33] and predict [e] [filter id changed and,19506.823058705777
+How can this prediction be changed?,previousfilter and explain cfe [e],previousfilter [and] change indoor_temperature decrease 20 and previouschange [e],3485.7799550518394
+Change prediction for id 30,filter id 30 and explain cfe [e],previousfilter and change id 30 and predict [e],2499.5025102980435
+What will it predict if we decrease indoor temperature by 3 degrees?,change indoor_temperature decrease 3 and predict [e],previousfilter and change indoor_temperature decrease 3 and predict [e],2906.6253481432796
+What would be the prediction if outdoor temperature would be 30?,change outdoor_temperature set 30 and predict [e],filter past_electricity greater than 1929.025 and filter outdoor_temperature less than 21.82399577 and change outdoor_temperature set 30 and predict [e],7092.976914718747
+Change indoor temperature to 22 and predict,change indoor_temperature set 22 and predict [e],previousfilter and change indoor_temperature set 22 and predict [e],2973.387351259589
+"When outdoor temperature is more than 23 degrees, what would be the prediction if we set indoor temperature to 23 degrees also?",filter outdoor_temperature greater than 23 and change indoor_temperature set 23 and predict [e],filter outdoor_temperature greater than 23 and change indoor_temperature set 23 and predict [e],3843.888302333653
+How accurate is the model?,score default [e],score accuracy [e],1243.4642873704433
+Is the model predicting correctly?,score default [e],score default [e]  indoor_temperature greater than 15.25 and change indoor_temperature increase 15 and score default [e] [c]filter indoor_temperature greater than 15.25 and filter past_electricity less than 640.4 and score default [e] [c]previousoperation and previousfilter [e],13255.921613425016
+Show me where does the model err,mistake sample [e],mistake sample [e],1407.6298400759697
+What are the typical mistakes made by the model?,mistake typical [e],mistake typical [e],1422.5327270105481
+How accurate is the model for samples with outdoor temperature higher than 25 degrees?,filter outdoor_temperature greater than 25 and scrore default [e],filter outdoor_temperature greater than 25 and score default [e],2768.1473144330084
+Does the model predict correctly when indoor temperature is lower than 23 degrees?,filter indoor_temperature less than 23 and mistake sample [e],filter indoor_temperature less than 23 and mistake sample [e],2722.138409037143
+Why is it predicted so?,previousfilter and explain features [e],previousfilter and explain features [e],1784.184891730547
+What about id 333?,filter id 333 and previousoperation [e],filter id equal to 333 and previousoperation [e],2583.571391645819
+What could be done to get a different prediction?,previousfilter and explain cfe [e],previousfilter and explain different effective [e] [s] and explain important topk 3 [e] [s] [s] [s] [e] [e] [e] [e] [e] [e] [s] [s] [s] [e] [e] [e] [e] [e] [s] [s] [s] [s] [e] [e] [e] [e] [e],19819.475346710533

@@ -30,6 +30,9 @@ inst_token_close = "[/INST]"
 system_token_open = "<<SYS>>"
 system_token_close = "<</SYS>>"
 
+# save the model here
+model = None
+
 # read the system prompt from a file
 with open(os.path.join(os.getcwd(), 'llama2chat', 'system_prompt.txt'), 'r') as file:
     system_prompt = file.read()
@@ -52,6 +55,16 @@ def load_peft_model(model, peft_model):
     peft_model = PeftModel.from_pretrained(model, peft_model)
     return peft_model
 
+
+def get_model():
+    global model
+    if model == None:
+        model = load_model(model_name, quantization, use_fast_kernels)
+        model = load_peft_model(model, peft_model)
+        model.eval()
+    return model
+
+
 def inference(user_input):
     if len(user_input) < 1:
         raise RuntimeError("User input is empty")
@@ -62,11 +75,6 @@ def inference(user_input):
     else:
         torch.cuda.manual_seed(seed)
     torch.manual_seed(seed)
-    
-    model = load_model(model_name, quantization, use_fast_kernels)
-    model = load_peft_model(model, peft_model)
-
-    model.eval()
 
     tokenizer = AutoTokenizer.from_pretrained(model_name)
     tokenizer.pad_token = tokenizer.eos_token
@@ -82,6 +90,8 @@ def inference(user_input):
         batch = {k: v.to("xpu") for k, v in batch.items()}
     else:
         batch = {k: v.to("cuda") for k, v in batch.items()}
+        
+    model = get_model()
 
     start = time.perf_counter()
 

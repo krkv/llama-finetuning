@@ -34,6 +34,7 @@ end_header_id = "<|end_header_id|>"
 begin_of_text = "<|begin_of_text|>"
 eot_id = "<|eot_id|>"
 
+# save the model here
 model = None
 
 # read the system prompt from a file
@@ -64,6 +65,7 @@ def get_model():
     if model == None:
         model = load_model(model_name, quantization, use_fast_kernels)
         model = load_peft_model(model, peft_model)
+        model.eval()
     return model
 
 
