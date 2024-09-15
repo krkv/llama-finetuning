@@ -1,2 +1,2 @@
-llama-recipes==0.0.2
+llama-recipes==0.0.3
 wandb==0.17.1
